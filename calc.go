@@ -6,6 +6,7 @@ import (
     "os"
     "bufio"
     "strconv"
+    "errors"
 )
     
 func RomanToInt(input string) (int) {
@@ -73,6 +74,9 @@ func main() {
     var name string
     scanner.Scan()
     name = scanner.Text()
+    format_err := errors.New("Wrong format")
+    type_err := errors.New("Different type")
+    negative_err := errors.New("No negative in Rome")
 
     var first string
     var first_roman bool = false
@@ -91,10 +95,11 @@ func main() {
                     continue
                 } else if (string(name[i]) == "+" || string(name[i]) == "-" ||
                 string(name[i]) == "*" || string(name[i]) == "/") && expr != "" {
-                    fmt.Println("Wrong format")
+                    fmt.Println(format_err)
                     return
             } else if expr != "" { second += string(name[i])
         } else { first += string(name[i])
+        
     }
 
     }
@@ -119,12 +124,12 @@ func main() {
     if (!first_roman && !second_roman) || (first_roman && second_roman) {
 
     } else {
-        fmt.Println("Different types")
-        return
+        fmt.Println(type_err)
+        return 
     }
     
     if new_first <= 0 || new_first > 10 || new_second <= 0 || new_second > 10 {
-        fmt.Println("Wrong range")
+        fmt.Println(format_err)
         return
     }
 
@@ -143,7 +148,7 @@ func main() {
     }
 
     if answer <= 0 && answer_roman {
-        fmt.Println("No negative in Rome")
+        fmt.Println(negative_err)
         return
     }
 
